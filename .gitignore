@@ -1,0 +1,7 @@
+__pycache__
+
+resume_index/
+data/
+
+venv
+.env
