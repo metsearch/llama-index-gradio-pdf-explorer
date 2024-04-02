@@ -1,7 +1,8 @@
 from pathlib import Path
 
-import click
 import dotenv
+
+import gradio as gr
 
 from llama_index.readers.file import PDFReader
 from llama_index.llms.openai import OpenAI
@@ -12,9 +13,7 @@ from utilities.utils import *
 
 dotenv.load_dotenv()
 
-@click.command()
-@click.option('--pdf_path', help='Path to PDF file', default='data/Resume.pdf')
-def explorer(pdf_path):
+def explorer(pdf_path, prompt):
     if not os.path.exists(pdf_path):
         raise FileNotFoundError(f'File not found: {pdf_path}')
     
@@ -42,11 +41,22 @@ def explorer(pdf_path):
         verbose=True,
     )
     
-    while (prompt := input('A question: ')) != 'q':
-        response = agent.query(prompt)
-        print(f'LLM: {response}')
-    
-    
+    response = agent.query(prompt)
+    return response
+
 if __name__ == '__main__':
     logger.info('Processing...')
-    explorer( )
+    with gr.Blocks(theme=gr.themes.Monochrome(), title='Resume Explorer') as app:
+        gr.Theme = 'soft'
+        with gr.Row():
+            with gr.Column():
+                pdf_file = gr.File(file_types=['pdf'])
+                prompt = gr.Textbox(label='Prompt', placeholder='Ask a question...')
+                submit_button = gr.Button(value='Submit')
+            with gr.Column():
+                answer = gr.Textbox(label='Answer')
+
+        submit_button.click(explorer, inputs=[pdf_file, prompt], outputs=[answer])
+        examples = gr.Examples(['Tell me about the candidate\'s skills.', 'How many years of experience?'] , inputs=[prompt])
+        
+    app.launch()

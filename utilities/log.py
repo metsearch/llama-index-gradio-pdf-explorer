@@ -1,7 +1,8 @@
 import logging
 
-logging.getLogger('matplotlib').setLevel(logging.INFO)
-logging.getLogger("PIL.PngImagePlugin").setLevel(logging.INFO)
+logging.getLogger('asyncio').setLevel(logging.WARNING)
+logging.getLogger('httpx').setLevel(logging.WARNING)
+logging.getLogger('httpcore').setLevel(logging.WARNING)
 
 FORMAT = '%(asctime)-15s | %(levelname)-8s | %(lineno)04d | %(filename)-8s | %(message)s'
 logging.basicConfig(level=logging.DEBUG, format=FORMAT)

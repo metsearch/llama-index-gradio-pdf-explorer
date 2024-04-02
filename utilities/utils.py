@@ -16,10 +16,8 @@ def get_pdf_index(documents, index_name):
         index.storage_context.persist(index_name)
     else:
         logger.info(f'Loading index {index_name}...')
-        index = load_index_from_storage(
-            index_name,
-            storage_context=StorageContext.from_defaults(index_name)
-        )
+        storage_context = StorageContext.from_defaults(persist_dir=index_name)
+        index = load_index_from_storage(storage_context)
         
     return index
 
