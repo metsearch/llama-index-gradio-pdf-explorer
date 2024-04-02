@@ -3,9 +3,9 @@
 This project utilizes `LlamaIndex`, `OpenAI` and `gradio` to explore a pdf document, specially a Resume. It's a very basic explorer, good to get start with LlamaIndex and Gradio.
 
 <p align="center">
-  <img src="./examples/gradio_ui.png">
+  <img src="./examples/gradio-ui.png">
   <h6 align="center">
-    Losses curve and Confusion matrix
+    Gradio Interface
   </h6>  
 </p>
 
